@@ -1,10 +1,11 @@
 - hosts: localhost
   connection: local
-  gather_facts: no           
+  gather_facts: no
   sudo: no
   vars:
     homebrew_taps:
       - homebrew/binary
+      - homebrew/versions
       - homebrew/dupes
       - caskroom/cask
       - sanemat/font
@@ -45,12 +46,13 @@
       - { name: gibo }
       - { name: source-highlight }
       - { name: editorconfig }
-      - { name: vim }
+      - { name: vim, install_options: [ with-lua, override-system-vim ] }
     homebrew_cask_packages:
       - { name: firefox }
       - { name: dropbox }
       - { name: keepassx }
       - { name: google-chrome }
+      - { name: google-japanese-ime }
       - { name: adobe-reader }
       - { name: java }
       - { name: skype }
@@ -58,6 +60,8 @@
       - { name: dash }
       - { name: intellij-idea }
       - { name: visual-studio-code }
+      - { name: coteditor }
+      - { name: alfred }
 
   tasks:
     - name: homebrew の tap リポジトリを追加
@@ -108,6 +112,7 @@
       args:
         creates: ~/Library/Fonts/Ricty-Bold.ttf
       notify: run fc-cache
+
 
   handlers:
     - name: run fc-cache
